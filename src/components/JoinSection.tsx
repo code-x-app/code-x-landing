@@ -20,7 +20,7 @@ export const JoinSection = () => {
     try {
       const formData = new FormData(e.currentTarget);
       
-      await fetch("/__forms.html", {
+      await fetch("/forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode({
