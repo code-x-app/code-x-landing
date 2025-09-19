@@ -4,7 +4,13 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Github, Twitter, ArrowRight, CheckCircle, MessageCircle, Compass } from 'lucide-react';
 
+// Helper function to encode form data
+function encode(data: Record<string, string>) {
+  return new URLSearchParams(data).toString();
+}
+
 export const JoinSection = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -13,15 +19,22 @@ export const JoinSection = () => {
     
     try {
       const formData = new FormData(e.currentTarget);
+      
       await fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData as any).toString(),
+        body: encode({
+          "form-name": "beta-signup",
+          "bot-field": "", // Honeypot field
+          name: formData.get("name") as string,
+          email: formData.get("email") as string,
+        }),
       });
       
-      // Show success message
+      // Reset form and show success
+      setName('');
+      setEmail('');
       setSubscribed(true);
-      setEmail(''); // Clear form
       setTimeout(() => setSubscribed(false), 3000);
     } catch (error) {
       console.error('Form submission error:', error);
@@ -95,24 +108,43 @@ export const JoinSection = () => {
           <form 
             name="beta-signup"
             onSubmit={handleSubmit} 
-            className="flex flex-col sm:flex-row gap-4 mb-6"
+            className="space-y-4 mb-6"
           >
             <input type="hidden" name="form-name" value="beta-signup" />
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email for early access..."
-              className="flex-1 px-4 py-3 bg-black/50 border border-cyan-400/30 rounded-lg text-cyan-100 placeholder-cyan-400/50 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
-              required
-            />
+            
+            {/* Honeypot field for spam protection */}
+            <p style={{ display: "none" }}>
+              <label>Don't fill this out: <input name="bot-field" /></label>
+            </p>
+            
+            {/* Name and Email inputs */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                className="flex-1 px-4 py-3 bg-black/50 border border-cyan-400/30 rounded-lg text-cyan-100 placeholder-cyan-400/50 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email for early access..."
+                className="flex-1 px-4 py-3 bg-black/50 border border-cyan-400/30 rounded-lg text-cyan-100 placeholder-cyan-400/50 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                required
+              />
+            </div>
+            
             <button
               type="submit"
-              className="cyber-button px-8 py-3 rounded-lg font-bold flex items-center justify-center gap-2 whitespace-nowrap"
+              className="cyber-button w-full sm:w-auto px-8 py-3 rounded-lg font-bold flex items-center justify-center gap-2 whitespace-nowrap mx-auto"
             >
               {subscribed ? <CheckCircle className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
-              {subscribed ? 'Subscribed!' : 'Join Beta'}
+              {subscribed ? 'Welcome to the Force!' : 'Join Beta'}
             </button>
           </form>
           
