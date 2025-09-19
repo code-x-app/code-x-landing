@@ -1,8 +1,10 @@
 <html><body>
-  <form name="beta-signup" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <form name="beta-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
     <input type="hidden" name="form-name" value="beta-signup" />
-    <input type="text" name="name" />
-    <input type="email" name="email" />
+    <input name="name" />
+    <input name="email" />
+    <p style="display:none"><input name="bot-field" /></p>
+    <button>stub-submit</button>
   </form>
 </body></html>
 
