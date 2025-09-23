@@ -1,0 +1,22 @@
+name = "code-x-landing"
+compatibility_date = "2024-01-15"
+
+[env.production]
+name = "code-x-landing"
+
+[env.preview]
+name = "code-x-landing-preview"
+
+# Build configuration for Next.js
+[build]
+command = "npm run pages:build"
+publish = "out"
+
+# Environment variables (add your secrets here)
+# [env.production.vars]
+# NEXT_PUBLIC_ANALYTICS_ID = "your-analytics-id"
+
+# Custom domains (add your domains here)
+# [[routes]]
+# pattern = "code-x.app"
+# zone_name = "your-domain.com"

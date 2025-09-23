@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pages:build": "next build",
+    "pages:dev": "next dev",
+    "deploy": "npm run pages:build && wrangler pages publish out"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
