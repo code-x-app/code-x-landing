@@ -11,6 +11,7 @@ name = "code-x-landing-preview"
 
 # Build command is configured in Cloudflare Pages dashboard
 # Command: npm run pages:build
+# Output directory: out
 
 # Environment variables (add your secrets here)
 # [env.production.vars]
