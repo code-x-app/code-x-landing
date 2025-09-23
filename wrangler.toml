@@ -9,9 +9,8 @@ name = "code-x-landing"
 [env.preview]
 name = "code-x-landing-preview"
 
-# Build configuration for Next.js
-[build]
-command = "npm run pages:build"
+# Build command is configured in Cloudflare Pages dashboard
+# Command: npm run pages:build
 
 # Environment variables (add your secrets here)
 # [env.production.vars]
