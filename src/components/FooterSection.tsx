@@ -84,7 +84,7 @@ export const FooterSection = () => (
           <ul className="space-y-3 text-cyan-200/80">
             <li>
               <a 
-                href="https://securi-x.netlify.app" 
+                href="https://securi-x-dashboard.pages.dev/" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-cyan-300 transition-colors flex items-center gap-2 group"

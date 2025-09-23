@@ -13,7 +13,7 @@ export const ArsenalSection = () => {
       status: "Live",
       color: "from-cyan-400 to-blue-500",
       features: ["Transaction Analysis", "SIWE Validation", "Approval Management", "Phishing Protection"],
-      link: "https://securi-x.netlify.app"
+      link: "https://securi-x-dashboard.pages.dev/"
     },
     {
       name: "Future Labs",

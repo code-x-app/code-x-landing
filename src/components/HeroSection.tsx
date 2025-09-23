@@ -77,7 +77,7 @@ export const HeroSection = () => {
           transition={{ duration: 0.8, delay: 1.3 }}
           className="text-xl md:text-2xl text-cyan-300 mb-8 max-w-4xl mx-auto leading-relaxed"
         >
-          <span className="relative inline-block mr-3">CODE<span className="absolute -top-1 -right-3 text-lg" style={{ color: '#ba68c8' }}>X</span></span> is assembling an intergalactic force — tools and experiments 
+          Code-X is assembling an intergalactic cyber-spider force — tools and experiments 
           that keep explorers safe while they tinker at the web's edge.
         </motion.p>
         
@@ -88,8 +88,8 @@ export const HeroSection = () => {
           transition={{ duration: 0.8, delay: 1.6 }}
           className="flex flex-col sm:flex-row gap-6 justify-center items-center"
         >
-          <motion.a
-            href="https://securi-x.netlify.app"
+          <motion.a 
+            href="https://securi-x-dashboard.pages.dev/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
@@ -97,15 +97,9 @@ export const HeroSection = () => {
             className="cyber-button px-8 py-4 rounded-lg text-lg font-bold flex items-center gap-3"
           >
             <Rocket className="w-6 h-6" />
-            Explore <span className="relative inline-block mr-1">SECURI<span className="absolute -top-1 -right-2 text-sm" style={{ color: '#ba68c8' }}>X</span></span>
+            Explore SECURI^X
           </motion.a>
           <motion.button 
-            onClick={() => {
-              const joinSection = document.querySelector('#join');
-              if (joinSection) {
-                joinSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="cyber-button-secondary px-8 py-4 rounded-lg text-lg font-bold flex items-center gap-3"
