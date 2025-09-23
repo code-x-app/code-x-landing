@@ -133,7 +133,7 @@ export const Navigation = () => {
                 ))}
                 
                 <motion.a
-                  href="https://securi-x.netlify.app"
+                  href="https://securi-x-dashboard.pages.dev/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cyber-button px-6 py-3 rounded-lg font-bold flex items-center gap-2 w-fit mt-4"
