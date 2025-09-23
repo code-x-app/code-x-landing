@@ -1,5 +1,6 @@
 # Cloudflare Pages-friendly configuration
 compatibility_date = "2024-01-15"
+# This configuration is optimized for Pages deployment
 
 # Build settings are configured in Cloudflare Pages dashboard:
 # Build command: npm run pages:build
