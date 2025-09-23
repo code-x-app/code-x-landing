@@ -1,23 +1,21 @@
-name = "code-x-landing"
+# Cloudflare Pages-friendly configuration
 compatibility_date = "2024-01-15"
-pages_build_output_dir = "out"
 
-# Production environment configuration
-[env.production]
-name = "code-x-landing"
+# Build settings are configured in Cloudflare Pages dashboard:
+# Build command: npm run pages:build
+# Build output directory: out
+# Custom domain: code-x.app
 
-[env.preview]
-name = "code-x-landing-preview"
+# Optional bindings for Pages Functions (if needed later):
+# [[kv_namespaces]]
+# binding = "FORM_SIGNUPS"
+# id = "xxxxxx"
 
-# Build command is configured in Cloudflare Pages dashboard
-# Command: npm run pages:build
-# Output directory: out
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "code_x"
+# database_id = "xxxxxx"
 
-# Environment variables (add your secrets here)
-# [env.production.vars]
-# NEXT_PUBLIC_ANALYTICS_ID = "your-analytics-id"
-
-# Custom domains configuration
-[[routes]]
-pattern = "code-x.app/*"
-zone_name = "code-x.app"
+# [[r2_buckets]]
+# binding = "ASSETS"
+# bucket_name = "code-x-assets"
