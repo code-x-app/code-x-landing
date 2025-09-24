@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Orbitron } from "next/font/google";
 import "./globals.css";
+import { GoogleTagManager, GoogleTagManagerNoScript } from "@/components/GoogleTagManager";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -61,11 +62,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-5L6K8X4G';
+
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <GoogleTagManager gtmId={gtmId} />
+      </head>
       <body
         className={`${inter.variable} ${orbitron.variable} antialiased`}
       >
+        <GoogleTagManagerNoScript gtmId={gtmId} />
         {children}
       </body>
     </html>

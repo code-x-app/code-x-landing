@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Rocket, Play } from 'lucide-react';
+import { pushToDataLayer } from './GoogleTagManager';
 
 export const HeroSection = () => {
   const { scrollY } = useScroll();
@@ -95,6 +96,14 @@ export const HeroSection = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="cyber-button px-8 py-4 rounded-lg text-lg font-bold flex items-center gap-3"
+            onClick={() => {
+              pushToDataLayer({
+                event: 'cta_clicked',
+                cta_type: 'explore_securix',
+                page_section: 'hero',
+                destination: 'dashboard'
+              });
+            }}
           >
             <Rocket className="w-6 h-6" />
             Explore SECURI^X
@@ -103,6 +112,14 @@ export const HeroSection = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="cyber-button-secondary px-8 py-4 rounded-lg text-lg font-bold flex items-center gap-3"
+            onClick={() => {
+              pushToDataLayer({
+                event: 'cta_clicked',
+                cta_type: 'join_beta',
+                page_section: 'hero',
+                action: 'button_click'
+              });
+            }}
           >
             <Play className="w-6 h-6" />
             Join the Beta
