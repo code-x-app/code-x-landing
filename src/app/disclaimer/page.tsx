@@ -58,17 +58,23 @@ export default function DisclaimerPage() {
               Important Notice
             </h3>
             <p className="text-cyan-200/90 leading-relaxed">
-              All products, services, and tools developed and offered by Code X (including but not limited to Securi-X, AccessShield AI, and future offerings) are provided strictly on an "as-is" and "as-available" basis.
+              All products, services, and tools developed and offered by Code X (including but not limited to Securi-X, AccessShield AI, and future offerings) are provided strictly on an "as-is" and "as-available" basis. Code X is currently an independent initiative and not a registered legal entity.
             </p>
           </div>
 
           <div className="space-y-6 text-cyan-200/90 leading-relaxed">
-            <p>
-              Code X solutions are designed to provide security insights, risk warnings, and informational support. They do not manage user funds, store private keys, or execute transactions on behalf of users. Final decisions and actions remain solely the responsibility of the user.
-            </p>
+            <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-400/30 rounded-lg p-6">
+              <h3 className="text-xl font-bold text-yellow-400 mb-4 flex items-center gap-2">
+                <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                Experimental / MVP Use Only
+              </h3>
+              <p>
+                Code X products may be experimental or in MVP stage. They are intended for testing, educational, and informational purposes only. They are not guaranteed for uninterrupted, error-free, or production-grade use.
+              </p>
+            </div>
 
             <div className="bg-black/30 border border-cyan-400/20 rounded-lg p-6">
-              <h4 className="text-lg font-bold text-cyan-300 mb-4">By using any Code X product or service, you acknowledge and agree that:</h4>
+              <h4 className="text-lg font-bold text-cyan-300 mb-4">Scope of Responsibility</h4>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></span>
@@ -76,17 +82,27 @@ export default function DisclaimerPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></span>
-                  <span>Code X does not guarantee prevention of loss, theft, or fraud, nor uninterrupted or error-free service.</span>
+                  <span>Code X does not hold or manage user funds, private keys, or execute transactions.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></span>
-                  <span>Code X and its developers, affiliates, and partners are not liable for any direct, indirect, incidental, or consequential damages or losses arising from use of its products and services.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></span>
-                  <span>Users remain fully responsible for safeguarding their wallets, assets, credentials, and transactions.</span>
+                  <span>Users remain solely responsible for safeguarding their wallets, assets, and credentials.</span>
                 </li>
               </ul>
+            </div>
+
+            <div className="bg-black/30 border border-cyan-400/20 rounded-lg p-6">
+              <h4 className="text-lg font-bold text-cyan-300 mb-4">Limitation of Liability</h4>
+              <p>
+                Code X and its developers, affiliates, and partners are not liable for any direct, indirect, incidental, or consequential damages or losses arising from the use of its products and services.
+              </p>
+            </div>
+
+            <div className="bg-black/30 border border-cyan-400/20 rounded-lg p-6">
+              <h4 className="text-lg font-bold text-cyan-300 mb-4">Governing Law</h4>
+              <p>
+                These disclaimers shall be governed by the laws of Singapore, without regard to conflict of law principles.
+              </p>
             </div>
 
             <div className="bg-gradient-to-r from-cyan-500/10 to-magenta-500/10 border border-cyan-400/30 rounded-lg p-6">

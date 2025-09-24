@@ -133,8 +133,8 @@ export const FooterSection = () => (
           <span className="text-cyan-400 ml-2 font-medium">Defending the digital frontier.</span>
         </p>
         <div className="flex gap-6 text-cyan-200/60 text-sm">
-          <a href="#" className="hover:text-cyan-300 transition-colors">Privacy Policy</a>
-          <a href="#" className="hover:text-cyan-300 transition-colors">Terms of Service</a>
+          <a href="/privacy" className="hover:text-cyan-300 transition-colors">Privacy Policy</a>
+          <a href="/terms" className="hover:text-cyan-300 transition-colors">Terms of Service</a>
           <a href="/disclaimer" className="hover:text-cyan-300 transition-colors">Code X - General Disclaimer</a>
           <a href="mailto:support@code-x.app" className="hover:text-cyan-300 transition-colors">Contact</a>
         </div>
