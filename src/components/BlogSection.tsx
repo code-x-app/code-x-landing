@@ -10,10 +10,11 @@ export const BlogSection = () => {
     {
       title: "Current Architecture for Layered Security in Warm Cryptocurrency Wallets",
       excerpt: "Warm wallets offer a balance between accessibility and security. Explore the multi-layered defense architecture that protects digital assets in 2025, from MPC to AI-driven monitoring.",
-      date: "2025-10-16",
+      date: "2025-10-15T16:01:00+08:00",
       category: "Technical",
       readTime: "8 min read",
       featured: true,
+      published: true,
       slug: "warm-wallet-security-architecture"
     },
     {
@@ -22,7 +23,8 @@ export const BlogSection = () => {
       date: "2024-01-15",
       category: "Research",
       readTime: "5 min read",
-      featured: false
+      featured: false,
+      published: true
     },
     {
       title: "Securi-X MVP Launch",
@@ -93,7 +95,7 @@ export const BlogSection = () => {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-magenta-400 mx-auto mb-8"></div>
           <p className="text-xl text-cyan-200 max-w-3xl mx-auto leading-relaxed">
-            Stay updated with the latest insights, releases, and behind-the-scenes content from the Code-X team. Updated 2025.
+            Stay updated with the latest insights, releases, and behind-the-scenes content from the Code-X team. Updated 2025 v2.
           </p>
         </motion.div>
         
