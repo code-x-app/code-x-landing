@@ -43,7 +43,7 @@ export default function WarmWalletSecurityPost() {
             <div className="flex items-center gap-4 text-cyan-400/60 text-sm">
               <div className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
-                October 16, 2024
+                October 16, 2025
               </div>
               <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
