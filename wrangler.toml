@@ -1,5 +1,9 @@
 # Cloudflare Pages-friendly configuration
 compatibility_date = "2024-01-15"
+
+[pages]
+# Where Next.js static export outputs the files
+pages_build_output_dir = "out"
 # This configuration is optimized for Pages deployment
 # Last updated: 2024-09-23
 
