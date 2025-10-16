@@ -83,6 +83,26 @@ export default function WarmWalletSecurityPost() {
               The core architecture often integrates hot and cold elements: small amounts in warm storage for quick access, with bulk assets in cold storage, connected via secure protocols during "warming" processes. Key components include hardware isolation, cryptographic safeguards, and real-time oversight. Below is a summary of the typical layers, drawn from current best practices.
             </p>
 
+            {/* Secure Wallet Architecture Diagram */}
+            <div className="bg-gradient-to-r from-cyan-500/10 to-magenta-500/10 border border-cyan-400/30 rounded-lg p-8 my-12">
+              <h2 className="text-2xl font-bold text-cyan-300 mb-6 flex items-center gap-3 font-orbitron">
+                <Shield className="w-6 h-6" />
+                Secure Wallet Architecture Overview
+              </h2>
+              
+              <div className="bg-black/40 border border-cyan-400/20 rounded-lg p-6 mb-8">
+                <div className="text-center text-cyan-300/60 mb-4">
+                  <span className="bg-cyan-400/20 text-cyan-300 px-3 py-1 rounded-full text-sm font-medium">
+                    📊 Diagram Placeholder
+                  </span>
+                </div>
+                <div className="text-center text-cyan-200/70">
+                  <p className="text-lg font-semibold mb-2">Secure Wallet Architecture Diagram</p>
+                  <p className="text-sm">Visual representation of warm wallet security layers and components</p>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-gradient-to-r from-cyan-500/10 to-magenta-500/10 border border-cyan-400/30 rounded-lg p-8 my-12">
               <h2 className="text-2xl font-bold text-cyan-300 mb-6 flex items-center gap-3 font-orbitron">
                 <Shield className="w-6 h-6" />
@@ -178,6 +198,26 @@ export default function WarmWalletSecurityPost() {
                   <p className="text-sm text-cyan-400/70 mt-4 italic">
                     <strong>Purpose:</strong> Enables quick response to threats and asset recovery post-breach.
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Layer 3 Flow Diagram */}
+            <div className="bg-gradient-to-r from-cyan-500/10 to-magenta-500/10 border border-cyan-400/30 rounded-lg p-8 my-12">
+              <h2 className="text-2xl font-bold text-cyan-300 mb-6 flex items-center gap-3 font-orbitron">
+                <Shield className="w-6 h-6" />
+                Layer 3 Security Flow
+              </h2>
+              
+              <div className="bg-black/40 border border-cyan-400/20 rounded-lg p-6 mb-8">
+                <div className="text-center text-cyan-300/60 mb-4">
+                  <span className="bg-cyan-400/20 text-cyan-300 px-3 py-1 rounded-full text-sm font-medium">
+                    🔄 Flow Diagram Placeholder
+                  </span>
+                </div>
+                <div className="text-center text-cyan-200/70">
+                  <p className="text-lg font-semibold mb-2">Layer 3 Security Flow Diagram</p>
+                  <p className="text-sm">Visual representation of security protocols and data flow in Layer 3</p>
                 </div>
               </div>
             </div>
