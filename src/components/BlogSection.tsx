@@ -109,7 +109,7 @@ export const BlogSection = () => {
             {posts.filter(post => post.featured).map((post) => (
               <Link 
                 key={post.title}
-                href={post.slug ? `/blog/${post.slug}` : '#'}
+                href={post.slug ? `/blog/${post.slug}/` : '#'}
                 className="block bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-8 cursor-pointer group hover:border-cyan-400/40 transition-all duration-300 h-full"
               >
                 <div className="flex items-center gap-4 mb-6">
