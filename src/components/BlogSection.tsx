@@ -3,16 +3,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, ArrowRight, Calendar, Clock, Tag } from 'lucide-react';
+import Link from 'next/link';
 
 export const BlogSection = () => {
   const posts = [
+    {
+      title: "Current Architecture for Layered Security in Warm Cryptocurrency Wallets",
+      excerpt: "Warm wallets offer a balance between accessibility and security. Explore the multi-layered defense architecture that protects digital assets in 2025, from MPC to AI-driven monitoring.",
+      date: "2024-10-16",
+      category: "Technical",
+      readTime: "8 min read",
+      featured: true,
+      slug: "warm-wallet-security-architecture"
+    },
     {
       title: "The Future of Web3 Security",
       excerpt: "Exploring emerging threats and innovative solutions in the decentralized web. How cyber-spiders are evolving to meet new challenges.",
       date: "2024-01-15",
       category: "Research",
       readTime: "5 min read",
-      featured: true
+      featured: false
     },
     {
       title: "Securi-X MVP Launch",
@@ -97,9 +107,10 @@ export const BlogSection = () => {
             className="lg:col-span-2"
           >
             {posts.filter(post => post.featured).map((post) => (
-              <div
+              <Link 
                 key={post.title}
-                className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-8 cursor-pointer group hover:border-cyan-400/40 transition-all duration-300 h-full"
+                href={post.slug ? `/blog/${post.slug}` : '#'}
+                className="block bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-8 cursor-pointer group hover:border-cyan-400/40 transition-all duration-300 h-full"
               >
                 <div className="flex items-center gap-4 mb-6">
                   <span className={`px-4 py-2 bg-gradient-to-r ${getCategoryColor(post.category)} bg-opacity-20 text-white rounded-full text-sm font-semibold border border-current/30`}>
@@ -132,9 +143,9 @@ export const BlogSection = () => {
                       {post.readTime}
                     </div>
                   </div>
-                  <ExternalLink className="w-5 h-5 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+                  <ArrowRight className="w-5 h-5 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
                 </div>
-              </div>
+              </Link>
             ))}
           </motion.article>
           
