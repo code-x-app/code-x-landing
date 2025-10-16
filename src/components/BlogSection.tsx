@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, ArrowRight, Calendar, Clock, Tag } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const BlogSection = () => {
   const posts = [
@@ -121,6 +122,20 @@ export const BlogSection = () => {
                   </span>
                   <span className="text-cyan-400/60 text-sm font-medium">FEATURED</span>
                 </div>
+
+                {/* Featured Image */}
+                {post.slug === 'warm-wallet-security-architecture' && (
+                  <div className="mb-6 rounded-lg overflow-hidden border border-cyan-400/20">
+                    <Image
+                      src="/images/blog/secure-wallet-architecture.png"
+                      alt="Secure Wallet Architecture Overview"
+                      width={600}
+                      height={400}
+                      className="w-full h-auto group-hover:scale-105 transition-transform duration-300"
+                      priority
+                    />
+                  </div>
+                )}
                 
                 <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-cyan-300 mb-4 group-hover:text-cyan-200 transition-colors">
                   {post.title}
