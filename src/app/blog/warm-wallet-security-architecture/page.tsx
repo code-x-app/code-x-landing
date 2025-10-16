@@ -5,6 +5,7 @@ import { Navigation } from '@/components/Navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Clock, Tag, Shield } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function WarmWalletSecurityPost() {
   return (
@@ -91,10 +92,15 @@ export default function WarmWalletSecurityPost() {
               </h2>
               
               <div className="bg-black/40 border border-cyan-400/20 rounded-lg p-6 mb-8">
-                <div className="text-center text-cyan-300/60 mb-4">
-                  <span className="bg-cyan-400/20 text-cyan-300 px-3 py-1 rounded-full text-sm font-medium">
-                    📊 Diagram Placeholder
-                  </span>
+                <div className="text-center mb-6">
+                  <Image
+                    src="/images/blog/secure-wallet-architecture.png"
+                    alt="Secure Wallet Architecture Diagram"
+                    width={800}
+                    height={600}
+                    className="mx-auto rounded-lg border border-cyan-400/30"
+                    priority
+                  />
                 </div>
                 <div className="text-center text-cyan-200/70">
                   <p className="text-lg font-semibold mb-2">Secure Wallet Architecture Diagram</p>
@@ -210,10 +216,15 @@ export default function WarmWalletSecurityPost() {
               </h2>
               
               <div className="bg-black/40 border border-cyan-400/20 rounded-lg p-6 mb-8">
-                <div className="text-center text-cyan-300/60 mb-4">
-                  <span className="bg-cyan-400/20 text-cyan-300 px-3 py-1 rounded-full text-sm font-medium">
-                    🔄 Flow Diagram Placeholder
-                  </span>
+                <div className="text-center mb-6">
+                  <Image
+                    src="/images/blog/layer3-flow.png"
+                    alt="Layer 3 Security Flow Diagram"
+                    width={800}
+                    height={600}
+                    className="mx-auto rounded-lg border border-cyan-400/30"
+                    priority
+                  />
                 </div>
                 <div className="text-center text-cyan-200/70">
                   <p className="text-lg font-semibold mb-2">Layer 3 Security Flow Diagram</p>
