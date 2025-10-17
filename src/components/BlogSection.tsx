@@ -35,7 +35,8 @@ export const BlogSection = () => {
       category: "Research",
       readTime: "5 min read",
       featured: false,
-      published: true
+      published: true,
+      slug: "future-web3-security"
     },
     {
       title: "Securi-X MVP Launch",
