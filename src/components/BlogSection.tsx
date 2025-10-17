@@ -9,12 +9,22 @@ import Image from 'next/image';
 export const BlogSection = () => {
   const posts = [
     {
+      title: "Analyzing 2025 Crypto Attack Scenarios Through MITRE AADAPT TTPs",
+      excerpt: "In 2025, cryptocurrency thefts surpassed $2.17 billion in the first half alone. Explore how MITRE's new AADAPT framework maps real-world attacks from Bybit to ZKsync, providing insights into blockchain-specific threats.",
+      date: "2025-10-24T10:00:00+08:00",
+      category: "Security",
+      readTime: "12 min read",
+      featured: true,
+      published: true,
+      slug: "mitre-aadapt-crypto-attacks"
+    },
+    {
       title: "Current Architecture for Layered Security in Warm Cryptocurrency Wallets",
       excerpt: "Warm wallets offer a balance between accessibility and security. Explore the multi-layered defense architecture that protects digital assets in 2025, from MPC to AI-driven monitoring.",
       date: "2025-10-15T16:01:00+08:00",
       category: "Technical",
       readTime: "8 min read",
-      featured: true,
+      featured: false,
       published: true,
       slug: "warm-wallet-security-architecture"
     },
