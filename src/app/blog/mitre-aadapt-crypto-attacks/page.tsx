@@ -1,12 +1,24 @@
 'use client';
 
 import { Metadata } from 'next';
-import { Shield, AlertTriangle, Target, Database, TrendingUp, ExternalLink } from 'lucide-react';
+import { Shield, AlertTriangle, Target, Database, TrendingUp, ExternalLink, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function MITREAADAPTCryptoAttacksPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+      {/* Back Button */}
+      <div className="max-w-6xl mx-auto px-6 pt-8">
+        <Link 
+          href="/"
+          className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <span className="font-medium">Back to Homepage</span>
+        </Link>
+      </div>
+
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5"></div>
