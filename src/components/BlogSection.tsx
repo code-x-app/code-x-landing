@@ -124,54 +124,65 @@ export const BlogSection = () => {
               <Link 
                 key={post.title}
                 href={post.slug ? `/blog/${post.slug}/` : '#'}
-                className="block bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-8 cursor-pointer group hover:border-cyan-400/40 transition-all duration-300 h-full"
+                className="group relative block bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-8 hover:border-cyan-400/40 transition-all duration-300 h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                prefetch={false}
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <span className={`px-4 py-2 bg-gradient-to-r ${getCategoryColor(post.category)} bg-opacity-20 text-white rounded-full text-sm font-semibold border border-current/30`}>
-                    <Tag className="w-4 h-4 inline mr-2" />
-                    {post.category}
-                  </span>
-                  <span className="text-cyan-400/60 text-sm font-medium">FEATURED</span>
-                </div>
+                {/* Decorative overlay - must NOT catch clicks */}
+                <div
+                  className="absolute inset-0 rounded-xl ring-1 ring-white/5"
+                  aria-hidden
+                  style={{ pointerEvents: "none" }}
+                />
+                
+                {/* Real content - should not catch clicks */}
+                <div className="pointer-events-none relative z-10">
+                  <div className="flex items-center gap-4 mb-6">
+                    <span className={`px-4 py-2 bg-gradient-to-r ${getCategoryColor(post.category)} bg-opacity-20 text-white rounded-full text-sm font-semibold border border-current/30`}>
+                      <Tag className="w-4 h-4 inline mr-2" />
+                      {post.category}
+                    </span>
+                    <span className="text-cyan-400/60 text-sm font-medium">FEATURED</span>
+                  </div>
 
-                {/* Featured Image */}
-                {post.slug === 'warm-wallet-security-architecture' && (
-                  <div className="mb-6 rounded-lg overflow-hidden border border-cyan-400/20">
-                    <Image
-                      src="/images/blog/secure-wallet-architecture.png"
-                      alt="Secure Wallet Architecture Overview"
-                      width={600}
-                      height={400}
-                      className="w-full h-auto group-hover:scale-105 transition-transform duration-300"
-                      priority
-                    />
-                  </div>
-                )}
-                
-                <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-cyan-300 mb-4 group-hover:text-cyan-200 transition-colors">
-                  {post.title}
-                </h3>
-                
-                <p className="text-cyan-200/80 text-lg leading-relaxed mb-6">
-                  {post.excerpt}
-                </p>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-cyan-400/60 text-sm">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {new Date(post.date).toLocaleDateString('en-US', { 
-                        year: 'numeric', 
-                        month: 'short', 
-                        day: 'numeric' 
-                      })}
+                  {/* Featured Image */}
+                  {post.slug === 'warm-wallet-security-architecture' && (
+                    <div className="mb-6 rounded-lg overflow-hidden border border-cyan-400/20">
+                      <Image
+                        src="/images/blog/secure-wallet-architecture.png"
+                        alt="Secure Wallet Architecture Overview"
+                        width={600}
+                        height={400}
+                        className="w-full h-auto group-hover:scale-105 transition-transform duration-300"
+                        priority
+                      />
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {post.readTime}
+                  )}
+                  
+                  <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-cyan-300 mb-4 group-hover:text-cyan-200 transition-colors">
+                    {post.title}
+                  </h3>
+                  
+                  <p className="text-cyan-200/80 text-lg leading-relaxed mb-6">
+                    {post.excerpt}
+                  </p>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4 text-cyan-400/60 text-sm">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {new Date(post.date).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'short', 
+                          day: 'numeric' 
+                        })}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {post.readTime}
+                      </div>
                     </div>
+                    <ArrowRight className="w-5 h-5 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
                 </div>
               </Link>
             ))}
@@ -180,40 +191,55 @@ export const BlogSection = () => {
           {/* Regular Posts */}
           <div className="space-y-6">
             {posts.filter(post => !post.featured).slice(0, 3).map((post, index) => (
-              <motion.article
+              <motion.div
                 key={post.title}
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
-                className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-6 cursor-pointer group hover:border-cyan-400/40 transition-all duration-300"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`px-3 py-1 bg-gradient-to-r ${getCategoryColor(post.category)} bg-opacity-20 text-white rounded-full text-xs font-semibold`}>
-                    {post.category}
-                  </span>
-                  <span className="text-cyan-400/60 text-xs">{post.readTime}</span>
-                </div>
-                
-                <h3 className="font-orbitron text-lg font-bold text-cyan-300 mb-3 group-hover:text-cyan-200 transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                
-                <p className="text-cyan-200/80 text-sm leading-relaxed mb-4 line-clamp-3">
-                  {post.excerpt}
-                </p>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-cyan-400/60 text-xs">
-                    {new Date(post.date).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      day: 'numeric' 
-                    })}
-                  </span>
-                  <ExternalLink className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
-                </div>
-              </motion.article>
+                <Link
+                  href={post.slug ? `/blog/${post.slug}/` : '#'}
+                  className="group relative block bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-6 hover:border-cyan-400/40 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                  prefetch={false}
+                >
+                  {/* Decorative overlay - must NOT catch clicks */}
+                  <div
+                    className="absolute inset-0 rounded-xl ring-1 ring-white/5"
+                    aria-hidden
+                    style={{ pointerEvents: "none" }}
+                  />
+                  
+                  {/* Real content - should not catch clicks */}
+                  <div className="pointer-events-none relative z-10">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className={`px-3 py-1 bg-gradient-to-r ${getCategoryColor(post.category)} bg-opacity-20 text-white rounded-full text-xs font-semibold`}>
+                        {post.category}
+                      </span>
+                      <span className="text-cyan-400/60 text-xs">{post.readTime}</span>
+                    </div>
+                    
+                    <h3 className="font-orbitron text-lg font-bold text-cyan-300 mb-3 group-hover:text-cyan-200 transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    
+                    <p className="text-cyan-200/80 text-sm leading-relaxed mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-cyan-400/60 text-xs">
+                        {new Date(post.date).toLocaleDateString('en-US', { 
+                          month: 'short', 
+                          day: 'numeric' 
+                        })}
+                      </span>
+                      <ExternalLink className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -221,41 +247,56 @@ export const BlogSection = () => {
         {/* More Posts Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           {posts.filter(post => !post.featured).slice(3).map((post, index) => (
-            <motion.article
+            <motion.div
               key={post.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
-              className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-6 cursor-pointer group hover:border-cyan-400/40 transition-all duration-300"
             >
-              <div className="flex items-center justify-between mb-4">
-                <span className={`px-3 py-1 bg-gradient-to-r ${getCategoryColor(post.category)} bg-opacity-20 text-white rounded-full text-xs font-semibold`}>
-                  {post.category}
-                </span>
-                <span className="text-cyan-400/60 text-xs">{post.readTime}</span>
-              </div>
-              
-              <h3 className="font-orbitron text-lg font-bold text-cyan-300 mb-3 group-hover:text-cyan-200 transition-colors">
-                {post.title}
-              </h3>
-              
-              <p className="text-cyan-200/80 text-sm leading-relaxed mb-4">
-                {post.excerpt}
-              </p>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-cyan-400/60 text-xs">
-                  {new Date(post.date).toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric' 
-                  })}
-                </span>
-                <ExternalLink className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
-              </div>
-            </motion.article>
+              <Link
+                href={post.slug ? `/blog/${post.slug}/` : '#'}
+                className="group relative block bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-6 hover:border-cyan-400/40 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                prefetch={false}
+              >
+                {/* Decorative overlay - must NOT catch clicks */}
+                <div
+                  className="absolute inset-0 rounded-xl ring-1 ring-white/5"
+                  aria-hidden
+                  style={{ pointerEvents: "none" }}
+                />
+                
+                {/* Real content - should not catch clicks */}
+                <div className="pointer-events-none relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className={`px-3 py-1 bg-gradient-to-r ${getCategoryColor(post.category)} bg-opacity-20 text-white rounded-full text-xs font-semibold`}>
+                      {post.category}
+                    </span>
+                    <span className="text-cyan-400/60 text-xs">{post.readTime}</span>
+                  </div>
+                  
+                  <h3 className="font-orbitron text-lg font-bold text-cyan-300 mb-3 group-hover:text-cyan-200 transition-colors">
+                    {post.title}
+                  </h3>
+                  
+                  <p className="text-cyan-200/80 text-sm leading-relaxed mb-4">
+                    {post.excerpt}
+                  </p>
+                  
+                  <div className="flex items-center justify-between">
+                    <span className="text-cyan-400/60 text-xs">
+                      {new Date(post.date).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                      })}
+                    </span>
+                    <ExternalLink className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
         
