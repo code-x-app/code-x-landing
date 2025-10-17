@@ -108,7 +108,8 @@ export const HeroSection = () => {
             <Rocket className="w-6 h-6" />
             Explore SECURI^X
           </motion.a>
-          <motion.button 
+          <motion.a
+            href="#join"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="cyber-button-secondary px-8 py-4 rounded-lg text-lg font-bold flex items-center gap-3"
@@ -117,13 +118,13 @@ export const HeroSection = () => {
                 event: 'cta_clicked',
                 cta_type: 'join_beta',
                 page_section: 'hero',
-                action: 'button_click'
+                destination: 'join_section'
               });
             }}
           >
             <Play className="w-6 h-6" />
             Join the Beta
-          </motion.button>
+          </motion.a>
         </motion.div>
         
         {/* Scroll Indicator */}
