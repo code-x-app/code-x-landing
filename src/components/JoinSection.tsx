@@ -4,44 +4,32 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Github, Twitter, ArrowRight, CheckCircle, MessageCircle, Compass } from 'lucide-react';
 
-// Helper function to encode form data
-function encode(data: Record<string, string>) {
-  return new URLSearchParams(data).toString();
-}
 
 export const JoinSection = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    try {
-      const formData = new FormData(e.currentTarget);
-      
-      await fetch("/forms.html", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({
-          "form-name": "beta-signup",
-          "bot-field": "", // Honeypot field
-          name: formData.get("name") as string,
-          email: formData.get("email") as string,
-        }),
-      });
-      
-      // Reset form and show success
-      setName('');
-      setEmail('');
-      setSubscribed(true);
-      setTimeout(() => setSubscribed(false), 3000);
-    } catch (error) {
-      console.error('Form submission error:', error);
-      // Still show success for UX (form might have worked)
-      setSubscribed(true);
-      setTimeout(() => setSubscribed(false), 3000);
-    }
+    // Create email content
+    const subject = encodeURIComponent('New Beta Signup from Code-X Landing Page');
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nThis person signed up for early access to SECURI^X and other CODE^X tools.\n\nTimestamp: ${new Date().toISOString()}\nSource: ${window.location.href}`
+    );
+    
+    // Create mailto link
+    const mailtoLink = `mailto:support@code-x.app?subject=${subject}&body=${body}`;
+    
+    // Open email client
+    window.open(mailtoLink, '_blank');
+    
+    // Reset form and show success
+    setName('');
+    setEmail('');
+    setSubscribed(true);
+    setTimeout(() => setSubscribed(false), 5000);
   };
 
   const socialLinks = [
@@ -106,16 +94,9 @@ export const JoinSection = () => {
           className="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm border border-cyan-400/20 rounded-xl p-8 mb-12 max-w-2xl mx-auto"
         >
           <form 
-            name="beta-signup"
             onSubmit={handleSubmit} 
             className="space-y-4 mb-6"
           >
-            <input type="hidden" name="form-name" value="beta-signup" />
-            
-            {/* Honeypot field for spam protection */}
-            <p style={{ display: "none" }}>
-              <label>Don't fill this out: <input name="bot-field" /></label>
-            </p>
             
             {/* Name and Email inputs */}
             <div className="flex flex-col sm:flex-row gap-4">
