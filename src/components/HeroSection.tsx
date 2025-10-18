@@ -9,8 +9,8 @@ export const HeroSection = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -200]);
   
-  // Video snippet state
-  const [showVideo, setShowVideo] = useState(true);
+  // Video snippet state - temporarily disabled for debugging
+  const [showVideo, setShowVideo] = useState(false); // Changed to false to disable video temporarily
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -18,7 +18,13 @@ export const HeroSection = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (videoRef.current && showVideo) {
-        videoRef.current.play().catch(console.error);
+        videoRef.current.load(); // Load the video first
+        videoRef.current.play().catch((error) => {
+          console.error('Video play failed:', error);
+          // If video fails to play, hide the overlay
+          setShowVideo(false);
+          setHasPlayedOnce(true);
+        });
       }
     }, 1000); // Start video after 1 second
 
@@ -65,12 +71,28 @@ export const HeroSection = () => {
               ref={videoRef}
               className="w-full h-full object-contain rounded-lg"
               onEnded={handleVideoEnd}
+              onError={(e) => {
+                console.error('Video error:', e);
+                setShowVideo(false);
+                setHasPlayedOnce(true);
+              }}
+              onLoadStart={() => console.log('Video loading started')}
+              onLoadedData={() => console.log('Video data loaded')}
               muted
               playsInline
+              preload="metadata"
             >
               <source src="/videos/grok-video-d48d90f9-c3c2-4d0e-9cfb-8e858a4833e4.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+            
+            {/* Loading indicator */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+              <div className="text-white text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400 mx-auto mb-2"></div>
+                <p className="text-sm">Loading video...</p>
+              </div>
+            </div>
           </div>
         </motion.div>
       )}
