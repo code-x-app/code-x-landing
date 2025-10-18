@@ -1,16 +1,95 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Rocket, Play } from 'lucide-react';
+import { Rocket, Play, X, RotateCcw } from 'lucide-react';
 import { pushToDataLayer } from './GoogleTagManager';
 
 export const HeroSection = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -200]);
   
+  // Video snippet state
+  const [showVideo, setShowVideo] = useState(true);
+  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Auto-play video on component mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (videoRef.current && showVideo) {
+        videoRef.current.play().catch(console.error);
+      }
+    }, 1000); // Start video after 1 second
+
+    return () => clearTimeout(timer);
+  }, [showVideo]);
+
+  // Hide video after it ends
+  const handleVideoEnd = () => {
+    setShowVideo(false);
+    setHasPlayedOnce(true);
+  };
+
+  // Replay video
+  const handleReplayVideo = () => {
+    setShowVideo(true);
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.play().catch(console.error);
+      }
+    }, 100);
+  };
+  
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Video Snippet Overlay */}
+      {showVideo && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black flex items-center justify-center"
+        >
+          <div className="relative w-full h-full max-w-4xl max-h-[80vh] mx-auto">
+            {/* Close button */}
+            <button
+              onClick={() => setShowVideo(false)}
+              className="absolute top-4 right-4 z-10 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+            >
+              <X className="w-6 h-6 text-white" />
+            </button>
+            
+            {/* Video element */}
+            <video
+              ref={videoRef}
+              className="w-full h-full object-contain rounded-lg"
+              onEnded={handleVideoEnd}
+              muted
+              playsInline
+            >
+              <source src="/videos/grok-video-d48d90f9-c3c2-4d0e-9cfb-8e858a4833e4.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Replay Video Button */}
+      {hasPlayedOnce && !showVideo && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={handleReplayVideo}
+          className="fixed top-6 right-6 z-40 p-3 bg-gradient-to-r from-cyan-500 to-magenta-500 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+          title="Replay Video"
+        >
+          <RotateCcw className="w-5 h-5 text-white" />
+        </motion.button>
+      )}
+
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(50)].map((_, i) => (
