@@ -9,8 +9,8 @@ export const HeroSection = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -200]);
   
-  // Video snippet state - temporarily disabled for debugging
-  const [showVideo, setShowVideo] = useState(false); // Changed to false to disable video temporarily
+  // Video snippet state
+  const [showVideo, setShowVideo] = useState(true);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -76,21 +76,30 @@ export const HeroSection = () => {
                 setShowVideo(false);
                 setHasPlayedOnce(true);
               }}
+              onCanPlay={() => {
+                console.log('Video can play');
+                // Hide loading indicator when video is ready
+                const loadingIndicator = document.querySelector('.video-loading');
+                if (loadingIndicator) {
+                  (loadingIndicator as HTMLElement).style.display = 'none';
+                }
+              }}
               onLoadStart={() => console.log('Video loading started')}
               onLoadedData={() => console.log('Video data loaded')}
               muted
               playsInline
-              preload="metadata"
+              preload="auto"
             >
               <source src="/videos/grok-video-d48d90f9-c3c2-4d0e-9cfb-8e858a4833e4.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             
             {/* Loading indicator */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+            <div className="video-loading absolute inset-0 flex items-center justify-center bg-black/50">
               <div className="text-white text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400 mx-auto mb-2"></div>
                 <p className="text-sm">Loading video...</p>
+                <p className="text-xs text-gray-400 mt-1">If video doesn't load, click X to continue</p>
               </div>
             </div>
           </div>
