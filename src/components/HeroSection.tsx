@@ -29,6 +29,7 @@ function HeroVideoSplash({
   const [isHoveringReplay, setIsHoveringReplay] = useState(false);
   const [errMsg, setErrMsg] = useState<string | null>(null);
   const [canPlay, setCanPlay] = useState(false);
+  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
 
   // Decide whether to show (once per session unless forced)
   useEffect(() => {
@@ -52,9 +53,11 @@ function HeroVideoSplash({
     (async () => {
       try {
         await v.play();
+        setAutoplayBlocked(false);
       } catch (e) {
         // Autoplay blocked — leave controls visible so user can tap play
         console.warn("Autoplay blocked or failed:", e);
+        setAutoplayBlocked(true);
       }
     })();
   }, [showSplash, disabled]);
@@ -168,9 +171,32 @@ function HeroVideoSplash({
             </video>
 
             {/* Status hint if loaded but not yet ready */}
-            {!canPlay && !errMsg && (
+            {!canPlay && !errMsg && !autoplayBlocked && (
               <div className="absolute inset-x-0 bottom-3 mx-auto w-fit rounded bg-black/60 px-2 py-1 text-[11px] text-white">
                 Loading video…
+              </div>
+            )}
+
+            {/* Manual play button when autoplay is blocked */}
+            {autoplayBlocked && !errMsg && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                <button
+                  onClick={async () => {
+                    const v = videoRef.current;
+                    if (v) {
+                      try {
+                        await v.play();
+                        setAutoplayBlocked(false);
+                      } catch (e) {
+                        console.error("Manual play failed:", e);
+                      }
+                    }
+                  }}
+                  className="flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-gray-900 shadow-lg hover:bg-white transition-colors"
+                >
+                  <Play size={20} />
+                  <span className="font-medium">Play Video</span>
+                </button>
               </div>
             )}
 
