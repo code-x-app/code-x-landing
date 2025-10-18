@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Twitter, Mail, ExternalLink } from 'lucide-react';
+import { Github, Twitter, Mail, ExternalLink, Facebook } from 'lucide-react';
 import { CyberSpider } from './CyberSpider';
 
 export const FooterSection = () => (
@@ -53,7 +53,8 @@ export const FooterSection = () => (
           >
             {[
               { icon: Github, href: '#', label: 'GitHub' },
-              { icon: Twitter, href: 'https://x.com/CodeX_er', label: 'Twitter' },
+              { icon: Twitter, href: 'https://x.com/CodeX_er', label: 'X (Twitter)' },
+              { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61582562217640', label: 'Facebook' },
               { icon: Mail, href: 'mailto:support@code-x.app', label: 'Email' },
             ].map((social, _index) => (
               <motion.a

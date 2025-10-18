@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Github, Twitter, ArrowRight, CheckCircle, MessageCircle, Compass } from 'lucide-react';
+import { Github, Twitter, ArrowRight, CheckCircle, MessageCircle, Compass, Facebook } from 'lucide-react';
 
 
 export const JoinSection = () => {
@@ -60,6 +60,13 @@ export const JoinSection = () => {
       label: 'Follow on X',
       description: 'Stay updated',
       color: 'from-blue-400 to-cyan-500'
+    },
+    { 
+      icon: Facebook, 
+      href: 'https://www.facebook.com/profile.php?id=61582562217640', 
+      label: 'Join on Facebook',
+      description: 'Connect with us',
+      color: 'from-blue-500 to-indigo-600'
     },
   ];
 
