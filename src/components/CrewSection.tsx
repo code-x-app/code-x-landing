@@ -83,6 +83,7 @@ export const CrewSection = () => {
                       width={200}
                       height={120}
                       className="w-full h-full object-cover rounded-lg border border-cyan-400/30 shadow-lg"
+                      style={{ objectPosition: 'center 30%' }}
                       loading="lazy"
                       decoding="async"
                     />
