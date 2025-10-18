@@ -50,16 +50,33 @@ function HeroVideoSplash({
     if (!showSplash || disabled) return;
     const v = videoRef.current;
     if (!v) return;
-    (async () => {
+    
+    // Reset video state and ensure it's muted for autoplay
+    v.currentTime = 0;
+    v.muted = true; // Required for autoplay in most browsers
+    
+    // Add a small delay to ensure video element is fully ready
+    const timer = setTimeout(async () => {
       try {
+        // Try multiple autoplay strategies
         await v.play();
         setAutoplayBlocked(false);
+        console.log("Autoplay successful");
       } catch (e) {
-        // Autoplay blocked — leave controls visible so user can tap play
-        console.warn("Autoplay blocked or failed:", e);
-        setAutoplayBlocked(true);
+        // If first attempt fails, try again after loading more data
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          await v.play();
+          setAutoplayBlocked(false);
+          console.log("Autoplay successful on retry");
+        } catch (retryError) {
+          console.warn("Autoplay blocked or failed:", retryError);
+          setAutoplayBlocked(true);
+        }
       }
-    })();
+    }, 500); // Increased delay to ensure video is ready
+    
+    return () => clearTimeout(timer);
   }, [showSplash, disabled]);
 
   const handleEnded = () => {
@@ -71,13 +88,22 @@ function HeroVideoSplash({
     const v = videoRef.current;
     if (!v) return;
     setErrMsg(null);
+    setAutoplayBlocked(false);
+    setCanPlay(false);
     setShowSplash(true);
-    try {
-      v.currentTime = 0;
-      await v.play();
-    } catch (e) {
-      console.warn("Replay failed:", e);
-    }
+    
+    // Small delay to ensure the video element is ready
+    setTimeout(async () => {
+      try {
+        v.currentTime = 0;
+        v.muted = false; // Enable audio on replay
+        await v.play();
+        setAutoplayBlocked(false);
+      } catch (e) {
+        console.warn("Replay failed:", e);
+        setAutoplayBlocked(true);
+      }
+    }, 100);
   };
 
   const onError = () => {
@@ -185,6 +211,7 @@ function HeroVideoSplash({
                     const v = videoRef.current;
                     if (v) {
                       try {
+                        v.muted = false; // Enable audio when user manually plays
                         await v.play();
                         setAutoplayBlocked(false);
                       } catch (e) {
