@@ -77,13 +77,10 @@ export const CrewSection = () => {
               <div className="text-center mb-6">
                 {member.callsign === "Venari-01" ? (
                   <div className="w-48 h-32 mb-3 mx-auto flex items-center justify-center">
-                    <Image
+                    <img
                       src="/images/code-x-developers.png"
                       alt="Code X Developers - Cyberpunk team"
-                      width={200}
-                      height={120}
                       className="w-full h-auto rounded-lg border border-cyan-400/30 shadow-lg"
-                      priority
                     />
                   </div>
                 ) : (
