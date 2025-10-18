@@ -2,127 +2,216 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Rocket, Play, X, RotateCcw } from 'lucide-react';
+import { Rocket, Play, X } from 'lucide-react';
 import { pushToDataLayer } from './GoogleTagManager';
+
+const VIDEO_MP4 = "/videos/grok-video-d48d90f9-c3c2-4d0e-9cfb-8e858a4833e4.mp4";
+// Optional WebM fallback (create this if you can)
+const VIDEO_WEBM = "/videos/grok-video-d48d90f9-c3c2-4d0e-9cfb-8e858a4833e4.webm";
+const SESSION_FLAG = "hero_video_splash_shown";
+
+type HeroVideoSplashProps = {
+  children: React.ReactNode;
+  alwaysShow?: boolean;
+  fadeDurationMs?: number;
+  posterSrc?: string;
+};
+
+function HeroVideoSplash({
+  children,
+  alwaysShow = false,
+  fadeDurationMs = 400,
+  posterSrc,
+}: HeroVideoSplashProps) {
+  const disabled = process.env.NEXT_PUBLIC_DISABLE_HERO_VIDEO === "1";
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [showSplash, setShowSplash] = useState(false);
+  const [isHoveringReplay, setIsHoveringReplay] = useState(false);
+  const [errMsg, setErrMsg] = useState<string | null>(null);
+  const [canPlay, setCanPlay] = useState(false);
+
+  // Decide whether to show (once per session unless forced)
+  useEffect(() => {
+    if (disabled) return; // completely skip video
+    try {
+      const hasShown = sessionStorage.getItem(SESSION_FLAG) === "1";
+      if (!hasShown || alwaysShow) {
+        setShowSplash(true);
+        if (!alwaysShow) sessionStorage.setItem(SESSION_FLAG, "1");
+      }
+    } catch {
+      setShowSplash(true);
+    }
+  }, [alwaysShow, disabled]);
+
+  // Try to autoplay when overlay opens
+  useEffect(() => {
+    if (!showSplash || disabled) return;
+    const v = videoRef.current;
+    if (!v) return;
+    (async () => {
+      try {
+        await v.play();
+      } catch (e) {
+        // Autoplay blocked — leave controls visible so user can tap play
+        console.warn("Autoplay blocked or failed:", e);
+      }
+    })();
+  }, [showSplash, disabled]);
+
+  const handleEnded = () => {
+    setTimeout(() => setShowSplash(false), fadeDurationMs);
+  };
+
+  const replay = async () => {
+    if (disabled) return;
+    const v = videoRef.current;
+    if (!v) return;
+    setErrMsg(null);
+    setShowSplash(true);
+    try {
+      v.currentTime = 0;
+      await v.play();
+    } catch (e) {
+      console.warn("Replay failed:", e);
+    }
+  };
+
+  const onError = () => {
+    const v = videoRef.current;
+    let detail = "Video failed to load.";
+    if (v?.error) {
+      const { code, message } = v.error as MediaError;
+      detail = `Video error code ${code}${message ? `: ${message}` : ""}`;
+    }
+    console.error(detail);
+    setErrMsg(
+      "We couldn't load the intro video (codec/path/MIME). The page is still usable—click Skip below."
+    );
+  };
+
+  const onLoadedData = () => {
+    // Fired when the first frame is loaded
+    setErrMsg(null);
+  };
+
+  const onCanPlay = () => {
+    // Ready to play through
+    setCanPlay(true);
+  };
+
+  return (
+    <div className="relative">
+      {/* Normal hero content */}
+      {children}
+
+      {/* Replay button (still present when disabled so UX is consistent; it won't do anything if disabled) */}
+      <button
+        type="button"
+        onClick={replay}
+        aria-label="Replay intro video"
+        className={[
+          "fixed right-4 bottom-4 z-30 inline-flex items-center gap-2 rounded-full px-4 py-2 shadow-lg",
+          "bg-white/90 text-gray-900 backdrop-blur hover:bg-white dark:bg-neutral-900/90 dark:text-white dark:hover:bg-neutral-900",
+          "transition-all duration-200",
+          isHoveringReplay ? "scale-[1.03]" : "scale-100",
+          disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
+        ].join(" ")}
+        onMouseEnter={() => setIsHoveringReplay(true)}
+        onMouseLeave={() => setIsHoveringReplay(false)}
+      >
+        <Play size={16} />
+        <span className="text-sm font-medium">Replay</span>
+      </button>
+
+      {/* Splash overlay */}
+      <div
+        className={[
+          "pointer-events-auto fixed inset-0 z-20 flex items-center justify-center",
+          showSplash && !disabled ? "opacity-100" : "opacity-0 pointer-events-none",
+          `transition-opacity duration-[${fadeDurationMs}ms] ease-out`,
+        ].join(" ")}
+        aria-hidden={!(showSplash && !disabled)}
+      >
+        {/* Dim background */}
+        <div className="absolute inset-0 bg-black/90" />
+
+        {/* Tiny toast error (if any) */}
+        {errMsg && (
+          <div className="absolute top-4 left-1/2 z-30 -translate-x-1/2 rounded-md bg-red-600/90 px-3 py-2 text-xs text-white shadow">
+            {errMsg}
+          </div>
+        )}
+
+        {/* Video container */}
+        <div className="relative mx-auto w-[min(100%,_1120px)] px-4">
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
+            <video
+              ref={videoRef}
+              className="block h-full w-full"
+              autoPlay
+              muted
+              playsInline
+              controls
+              onError={onError}
+              onLoadedData={onLoadedData}
+              onCanPlay={onCanPlay}
+              onEnded={handleEnded}
+              poster={posterSrc}
+              preload="metadata"
+            >
+              {/* WebM first (if present), then MP4 */}
+              <source src={VIDEO_WEBM} type="video/webm" />
+              <source src={VIDEO_MP4} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Status hint if loaded but not yet ready */}
+            {!canPlay && !errMsg && (
+              <div className="absolute inset-x-0 bottom-3 mx-auto w-fit rounded bg-black/60 px-2 py-1 text-[11px] text-white">
+                Loading video…
+              </div>
+            )}
+
+            {/* Close / Skip */}
+            <button
+              type="button"
+              onClick={handleEnded}
+              className="absolute right-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs text-white backdrop-blur transition hover:bg-black/80"
+            >
+              Skip
+            </button>
+          </div>
+
+          {/* Hard fallback CTA if video fails */}
+          {errMsg && (
+            <div className="mt-3 text-center text-sm text-white/80">
+              Having trouble?{" "}
+              <button className="underline" onClick={() => window.location.reload()}>
+                Reload
+              </button>{" "}
+              or{" "}
+              <a className="underline" href={VIDEO_MP4} target="_blank" rel="noreferrer">
+                open the video directly
+              </a>
+              .
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export const HeroSection = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -200]);
   
-  // Video snippet state
-  const [showVideo, setShowVideo] = useState(true);
-  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Auto-play video on component mount
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (videoRef.current && showVideo) {
-        videoRef.current.load(); // Load the video first
-        videoRef.current.play().catch((error) => {
-          console.error('Video play failed:', error);
-          // If video fails to play, hide the overlay
-          setShowVideo(false);
-          setHasPlayedOnce(true);
-        });
-      }
-    }, 1000); // Start video after 1 second
-
-    return () => clearTimeout(timer);
-  }, [showVideo]);
-
-  // Hide video after it ends
-  const handleVideoEnd = () => {
-    setShowVideo(false);
-    setHasPlayedOnce(true);
-  };
-
-  // Replay video
-  const handleReplayVideo = () => {
-    setShowVideo(true);
-    setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play().catch(console.error);
-      }
-    }, 100);
-  };
-  
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Snippet Overlay */}
-      {showVideo && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-        >
-          <div className="relative w-full h-full max-w-4xl max-h-[80vh] mx-auto">
-            {/* Close button */}
-            <button
-              onClick={() => setShowVideo(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
-            >
-              <X className="w-6 h-6 text-white" />
-            </button>
-            
-            {/* Video element */}
-            <video
-              ref={videoRef}
-              className="w-full h-full object-contain rounded-lg"
-              onEnded={handleVideoEnd}
-              onError={(e) => {
-                console.error('Video error:', e);
-                setShowVideo(false);
-                setHasPlayedOnce(true);
-              }}
-              onCanPlay={() => {
-                console.log('Video can play');
-                // Hide loading indicator when video is ready
-                const loadingIndicator = document.querySelector('.video-loading');
-                if (loadingIndicator) {
-                  (loadingIndicator as HTMLElement).style.display = 'none';
-                }
-              }}
-              onLoadStart={() => console.log('Video loading started')}
-              onLoadedData={() => console.log('Video data loaded')}
-              muted
-              playsInline
-              preload="auto"
-            >
-              <source src="/videos/grok-video-d48d90f9-c3c2-4d0e-9cfb-8e858a4833e4.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            
-            {/* Loading indicator */}
-            <div className="video-loading absolute inset-0 flex items-center justify-center bg-black/50">
-              <div className="text-white text-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400 mx-auto mb-2"></div>
-                <p className="text-sm">Loading video...</p>
-                <p className="text-xs text-gray-400 mt-1">If video doesn't load, click X to continue</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Replay Video Button */}
-      {hasPlayedOnce && !showVideo && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleReplayVideo}
-          className="fixed top-6 right-6 z-40 p-3 bg-gradient-to-r from-cyan-500 to-magenta-500 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-          title="Replay Video"
-        >
-          <RotateCcw className="w-5 h-5 text-white" />
-        </motion.button>
-      )}
-
-      {/* Animated background particles */}
-      <div className="absolute inset-0 overflow-hidden">
+    <HeroVideoSplash>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Animated background particles */}
+        <div className="absolute inset-0 overflow-hidden">
         {[...Array(50)].map((_, i) => (
           <motion.div
             key={i}
@@ -258,5 +347,6 @@ export const HeroSection = () => {
         </motion.div>
       </motion.div>
     </section>
+    </HeroVideoSplash>
   );
 };
