@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Zap, Globe, CheckCircle, ExternalLink } from 'lucide-react';
+import { Shield, Zap, Globe, CheckCircle, ExternalLink, FileCheck } from 'lucide-react';
 
 export const ArsenalSection = () => {
   const tools = [
@@ -14,6 +14,15 @@ export const ArsenalSection = () => {
       color: "from-cyan-400 to-blue-500",
       features: ["Transaction Analysis", "SIWE Validation", "Approval Management", "Phishing Protection"],
       link: "https://securi-x-dashboard.pages.dev/"
+    },
+    {
+      name: "Safe TX Checklist",
+      description: "Pre-flight safety checks for blockchain transactions. Analyze contracts, detect risks, and verify transactions before signing.",
+      icon: FileCheck,
+      status: "Live",
+      color: "from-green-400 to-emerald-500",
+      features: ["Contract Risk Analysis", "Fake Token Detection", "Transaction Simulation", "Safety Score Rating"],
+      link: "https://safe-tx-api.hybridv0.workers.dev"
     },
     {
       name: "Future Labs",
