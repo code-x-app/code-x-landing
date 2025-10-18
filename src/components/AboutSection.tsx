@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export const AboutSection = () => (
   <section id="about" className="py-20 px-6 relative">
@@ -48,58 +49,19 @@ export const AboutSection = () => (
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="w-64 h-64 mx-auto relative flex items-center justify-center"
+            className="w-80 h-80 mx-auto relative flex items-center justify-center"
           >
-            {/* Clean geometric design */}
             <div className="relative">
-              {/* Outer ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="w-48 h-48 border-2 border-neon-cyan/30 rounded-full"
+              <Image
+                src="/images/code-x-dna.png"
+                alt="Code X DNA - Infinity symbol with binary code on circuit board"
+                width={400}
+                height={400}
+                className="w-full h-auto rounded-lg border border-cyan-400/30 shadow-2xl"
+                priority
               />
-              
-              {/* Middle ring */}
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-6 border-2 border-neon-magenta/40 rounded-full"
-              />
-              
-              {/* Inner core - C with power X */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <div className="w-20 h-20 bg-gradient-to-r from-neon-cyan to-neon-magenta rounded-full flex items-center justify-center">
-                  <div className="relative flex items-center justify-center">
-                    <div className="text-3xl font-orbitron font-bold text-black">C</div>
-                    <div className="text-lg font-orbitron font-bold text-black absolute -top-1 -right-2">X</div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Floating particles */}
-              {[0, 90, 180, 270].map((angle, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-3 h-3 bg-neon-cyan rounded-full"
-                  style={{
-                    top: '50%',
-                    left: '50%',
-                    transformOrigin: '0 0',
-                  }}
-                  animate={{
-                    rotate: [angle, angle + 360],
-                    scale: [1, 1.5, 1],
-                  }}
-                  transition={{
-                    rotate: { duration: 15, repeat: Infinity, ease: "linear" },
-                    scale: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 },
-                  }}
-                >
-                  <div className="w-3 h-3 bg-neon-cyan rounded-full" style={{
-                    transform: 'translate(-50%, -50%) translateX(100px)'
-                  }} />
-                </motion.div>
-              ))}
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/10 to-magenta-500/10 blur-xl scale-110"></div>
             </div>
           </motion.div>
         </div>
