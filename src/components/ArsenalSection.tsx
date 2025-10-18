@@ -15,15 +15,15 @@ export const ArsenalSection = () => {
       features: ["Transaction Analysis", "SIWE Validation", "Approval Management", "Phishing Protection"],
       link: "https://securi-x-dashboard.pages.dev/"
     },
-    {
-      name: "Safe TX Checklist",
-      description: "Pre-flight safety checks for blockchain transactions. Analyze contracts, detect risks, and verify transactions before signing.",
-      icon: FileCheck,
-      status: "Live",
-      color: "from-green-400 to-emerald-500",
-      features: ["Contract Risk Analysis", "Fake Token Detection", "Transaction Simulation", "Safety Score Rating"],
-      link: "https://safe-tx-api.hybridv0.workers.dev"
-    },
+           {
+             name: "Safe TX Checklist",
+             description: "Pre-flight safety checks for blockchain transactions. Analyze contracts, detect risks, and verify transactions before signing.",
+             icon: FileCheck,
+             status: "Live",
+             color: "from-green-400 to-emerald-500",
+             features: ["Contract Risk Analysis", "Fake Token Detection", "Transaction Simulation", "Safety Score Rating"],
+             link: "https://safe-tx-checker.pages.dev"
+           },
     {
       name: "Future Labs",
       description: "Experimental security tools and research projects in development.",
