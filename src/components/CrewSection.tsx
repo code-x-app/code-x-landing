@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export const CrewSection = () => {
   const crew = [
@@ -75,44 +76,15 @@ export const CrewSection = () => {
               {/* Callsign Header */}
               <div className="text-center mb-6">
                 {member.callsign === "Venari-01" ? (
-                  <div className="w-16 h-16 mb-3 mx-auto flex items-center justify-center">
-                    <svg viewBox="0 0 100 100" className="w-full h-full text-cyan-400">
-                      <defs>
-                        <radialGradient id="eyeGradient" cx="50%" cy="40%" r="60%">
-                          <stop offset="0%" stopColor="currentColor" stopOpacity="0.1"/>
-                          <stop offset="70%" stopColor="currentColor" stopOpacity="0.3"/>
-                          <stop offset="100%" stopColor="currentColor" stopOpacity="0.8"/>
-                        </radialGradient>
-                      </defs>
-                      
-                      <g>
-                        {/* Outer eye shape */}
-                        <ellipse cx="50" cy="50" rx="35" ry="25" fill="url(#eyeGradient)" stroke="currentColor" strokeWidth="2"/>
-                        
-                        {/* Iris */}
-                        <circle cx="50" cy="50" r="18" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.8"/>
-                        
-                        {/* Pupil */}
-                        <circle cx="50" cy="50" r="8" fill="currentColor"/>
-                        
-                        {/* Inner pupil highlight */}
-                        <circle cx="52" cy="47" r="2" fill="currentColor" opacity="0.3"/>
-                        
-                        {/* Tech details - scanning lines */}
-                        <line x1="15" y1="35" x2="25" y2="35" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
-                        <line x1="75" y1="35" x2="85" y2="35" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
-                        <line x1="15" y1="50" x2="25" y2="50" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
-                        <line x1="75" y1="50" x2="85" y2="50" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
-                        <line x1="15" y1="65" x2="25" y2="65" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
-                        <line x1="75" y1="65" x2="85" y2="65" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
-                        
-                        {/* Corner brackets */}
-                        <path d="M20,25 L15,25 L15,30" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
-                        <path d="M80,25 L85,25 L85,30" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
-                        <path d="M20,75 L15,75 L15,70" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
-                        <path d="M80,75 L85,75 L85,70" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
-                      </g>
-                    </svg>
+                  <div className="w-48 h-32 mb-3 mx-auto flex items-center justify-center">
+                    <Image
+                      src="/images/code-x-developers.png"
+                      alt="Code X Developers - Cyberpunk team"
+                      width={200}
+                      height={120}
+                      className="w-full h-auto rounded-lg border border-cyan-400/30 shadow-lg"
+                      priority
+                    />
                   </div>
                 ) : (
                   <div className="text-4xl mb-3">{member.callsign.split(' ')[0]}</div>
