@@ -78,9 +78,13 @@ export const CrewSection = () => {
                 {member.callsign === "Venari-01" ? (
                   <div className="w-48 h-32 mb-3 mx-auto flex items-center justify-center">
                     <img
-                      src="/images/code-x-developers.png"
+                      src="/images/code-x-developers.png?v=3"
                       alt="Code X Developers - Cyberpunk team"
-                      className="w-full h-auto rounded-lg border border-cyan-400/30 shadow-lg"
+                      width={200}
+                      height={120}
+                      className="w-full h-full object-cover rounded-lg border border-cyan-400/30 shadow-lg"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 ) : (
