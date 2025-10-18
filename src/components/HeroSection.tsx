@@ -157,6 +157,7 @@ function HeroVideoSplash({
               onLoadedData={onLoadedData}
               onCanPlay={onCanPlay}
               onEnded={handleEnded}
+              onStalled={() => setErrMsg("Video stalled — likely missing or blocked. Click Skip to continue.")}
               poster={posterSrc}
               preload="metadata"
             >
