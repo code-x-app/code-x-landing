@@ -62,6 +62,15 @@ function HeroVideoSplash({
         await v.play();
         setAutoplayBlocked(false);
         console.log("Autoplay successful");
+        
+        // After autoplay succeeds, enable audio after a short delay
+        setTimeout(() => {
+          if (v && !v.paused) {
+            v.muted = false;
+            v.volume = 1.0;
+            console.log("Audio enabled after autoplay");
+          }
+        }, 1000);
       } catch (e) {
         // If first attempt fails, try again after loading more data
         try {
@@ -69,6 +78,15 @@ function HeroVideoSplash({
           await v.play();
           setAutoplayBlocked(false);
           console.log("Autoplay successful on retry");
+          
+          // Enable audio after successful retry
+          setTimeout(() => {
+            if (v && !v.paused) {
+              v.muted = false;
+              v.volume = 1.0;
+              console.log("Audio enabled after retry");
+            }
+          }, 1000);
         } catch (retryError) {
           console.warn("Autoplay blocked or failed:", retryError);
           setAutoplayBlocked(true);
@@ -97,6 +115,8 @@ function HeroVideoSplash({
       try {
         v.currentTime = 0;
         v.muted = false; // Enable audio on replay
+        v.volume = 1.0; // Set volume to maximum
+        console.log("Replay - Audio enabled, volume:", v.volume);
         await v.play();
         setAutoplayBlocked(false);
       } catch (e) {
@@ -122,11 +142,34 @@ function HeroVideoSplash({
   const onLoadedData = () => {
     // Fired when the first frame is loaded
     setErrMsg(null);
+    
+    // Debug audio tracks
+    const v = videoRef.current;
+    if (v) {
+      console.log("Video loaded - Audio tracks:", v.audioTracks?.length || "No audioTracks property");
+      console.log("Video muted:", v.muted);
+      console.log("Video volume:", v.volume);
+    }
   };
 
   const onCanPlay = () => {
     // Ready to play through
     setCanPlay(true);
+    
+    // Add click event listener to enable audio on user interaction
+    const v = videoRef.current;
+    if (v) {
+      const enableAudio = () => {
+        v.muted = false;
+        v.volume = 1.0;
+        console.log("Audio enabled by user interaction");
+      };
+      
+      // Enable audio on any user interaction
+      v.addEventListener('click', enableAudio, { once: true });
+      v.addEventListener('play', enableAudio, { once: true });
+      v.addEventListener('volumechange', enableAudio, { once: true });
+    }
   };
 
   return (
@@ -182,6 +225,7 @@ function HeroVideoSplash({
               muted
               playsInline
               controls
+              volume={1.0}
               onError={onError}
               onLoadedData={onLoadedData}
               onCanPlay={onCanPlay}
@@ -203,6 +247,13 @@ function HeroVideoSplash({
               </div>
             )}
 
+            {/* Audio status indicator */}
+            {canPlay && !errMsg && !autoplayBlocked && videoRef.current?.muted && (
+              <div className="absolute top-3 left-3 rounded bg-black/60 px-2 py-1 text-[11px] text-white">
+                🔇 Click video to enable audio
+              </div>
+            )}
+
             {/* Manual play button when autoplay is blocked */}
             {autoplayBlocked && !errMsg && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/20">
@@ -212,6 +263,8 @@ function HeroVideoSplash({
                     if (v) {
                       try {
                         v.muted = false; // Enable audio when user manually plays
+                        v.volume = 1.0; // Set volume to maximum
+                        console.log("Manual play - Audio enabled, volume:", v.volume);
                         await v.play();
                         setAutoplayBlocked(false);
                       } catch (e) {
@@ -263,9 +316,9 @@ export const HeroSection = () => {
   
   return (
     <HeroVideoSplash>
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated background particles */}
-        <div className="absolute inset-0 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden">
         {[...Array(50)].map((_, i) => (
           <motion.div
             key={i}
